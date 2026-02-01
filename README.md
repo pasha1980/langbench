@@ -8,11 +8,11 @@ Everyone was constantly trying to convince me of certain stereotypes about the p
 
 ## How does it work?
 
-The `competetors`` directory contains simple API implementations based on the requirements (the requirements are described below).
+The `competitors`` directory contains simple API implementations based on the requirements (the requirements are described below).
 
 I tried (and I encourage anyone wanted to contribuet) to implement them optimally and at the same time in a way that a typical developer would implement them on a typical project (without ASM, following common frameworks, without `php://input`, etc.).
 
-Each `competetor` should also provide valid Dockerfile in root directory.
+Each `competitor` should also provide valid Dockerfile in root directory.
 
 ### API requirements
 
