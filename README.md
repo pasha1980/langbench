@@ -66,3 +66,9 @@ Fields:
 ## Contribution
 
 If you found some bottleneck, don't agree with testing approach, etc - feel free to contribute :)
+
+## TODOs
+
+- [] Workflow for automatic comparison
+- [] Add JS-based API
+- [] who-knows
