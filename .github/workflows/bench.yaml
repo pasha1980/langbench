@@ -1,0 +1,24 @@
+name: Benchmarking
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  bench-wrk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-docker-action@v4
+      - name: Install wrk
+        script: |
+          apt-get update
+          apt-get install -y wrk
+          wrk --version
+      # - name: Bench PHP
+      #   script: |
