@@ -25,7 +25,7 @@ jobs:
           docker run -d --rm -p 8080:8080 --name php-bench php-bench
           output=$(make test-wrk)
           docker stop php-bench
-          docker rm php-bench
+          docker rmi php-bench
           read latency req_sec transfer <<<"$(
             echo "$output" | awk '
               {
@@ -45,7 +45,7 @@ jobs:
           docker run -d --rm -p 8080:8080 --name go-bench go-bench
           output=$(make test-wrk)
           docker stop go-bench
-          docker rm go-bench
+          docker rmi go-bench
           read latency req_sec transfer <<<"$(
             echo "$output" | awk '
               {
