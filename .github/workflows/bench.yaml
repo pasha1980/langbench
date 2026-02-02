@@ -19,13 +19,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y wrk
+      - name: Machine paramenters
+        run: |
+          nproc
+          free -h
+          uname -a
       - name: Bench PHP
         run: |
-          docker build -t php-bench ./competitors/php
+          docker build -t php-bench ./competitors/php &> /dev/null
           docker run -d --rm -p 8080:8080 --name php-bench php-bench
           output=$(make test-wrk)
-          docker stop php-bench
-          docker rmi php-bench
+          docker stop php-bench &> /dev/null
+          docker rmi php-bench &> /dev/null
           read latency req_sec transfer <<<"$(
             echo "$output" | awk '
               {
@@ -41,11 +46,11 @@ jobs:
           echo -e "Total: \nLatency: $latency\nReq/Sec: $req_sec\nTransfer Rate: $transfer"
       - name: Bench Go
         run: |
-          docker build -t go-bench ./competitors/golang
+          docker build -t go-bench ./competitors/golang &> /dev/null
           docker run -d --rm -p 8080:8080 --name go-bench go-bench
           output=$(make test-wrk)
-          docker stop go-bench
-          docker rmi go-bench
+          docker stop go-bench &> /dev/null
+          docker rmi go-bench &> /dev/null
           read latency req_sec transfer <<<"$(
             echo "$output" | awk '
               {
