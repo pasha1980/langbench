@@ -19,6 +19,43 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y wrk
-          wrk --version
-      # - name: Bench PHP
-      #   script: |
+      - name: Bench PHP
+        run: |
+          docker build -t php-bench ./competitors/php
+          docker run -d --rm -p 8080:8080 --name php-bench php-bench
+          output=$(make test-wrk)
+          docker stop php-bench
+          docker rm php-bench
+          read latency req_sec transfer <<<"$(
+            echo "$output" | awk '
+              {
+                for (i=1; i<=NF; i++) {
+                  if ($i=="Latency")        l=$(i+1)
+                  if ($i=="Req/Sec")        r=$(i+1)
+                  if ($i=="Transfer/sec:")  t=$(i+1)
+                }
+              }
+              END { print l, r, t }
+            ')"
+
+          echo "Total: \nLatency: $latency\nReq/Sec: $req_sec\nTransfer Rate: $trasfer"
+      - name: Bench Go
+        run: |
+          docker build -t go-bench ./competitors/golang
+          docker run -d --rm -p 8080:8080 --name go-bench go-bench
+          output=$(make test-wrk)
+          docker stop go-bench
+          docker rm go-bench
+          read latency req_sec transfer <<<"$(
+            echo "$output" | awk '
+              {
+                for (i=1; i<=NF; i++) {
+                  if ($i=="Latency")        l=$(i+1)
+                  if ($i=="Req/Sec")        r=$(i+1)
+                  if ($i=="Transfer/sec:")  t=$(i+1)
+                }
+              }
+              END { print l, r, t }
+            ')"
+
+          echo "Total: \nLatency: $latency\nReq/Sec: $req_sec\nTransfer Rate: $trasfer"
