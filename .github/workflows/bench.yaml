@@ -38,7 +38,7 @@ jobs:
               END { print l, r, t }
             ')"
 
-          echo "Total: \nLatency: $latency\nReq/Sec: $req_sec\nTransfer Rate: $trasfer"
+          echo -e "Total: \nLatency: $latency\nReq/Sec: $req_sec\nTransfer Rate: $transfer"
       - name: Bench Go
         run: |
           docker build -t go-bench ./competitors/golang
@@ -58,4 +58,4 @@ jobs:
               END { print l, r, t }
             ')"
 
-          echo "Total: \nLatency: $latency\nReq/Sec: $req_sec\nTransfer Rate: $trasfer"
+          echo -e "Total: \nLatency: $latency\nReq/Sec: $req_sec\nTransfer Rate: $transfer"
