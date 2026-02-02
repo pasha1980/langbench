@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: docker/setup-docker-action@v4
       - name: Install wrk
-        script: |
+        run: |
           apt-get update
           apt-get install -y wrk
           wrk --version
