@@ -21,7 +21,15 @@ func Handler(c fiber.Ctx) error {
 		Checksum: make([]byte, 64),
 	}
 
+	ids := make(map[string]struct{})
+
 	for _, item := range request.Items {
+		if _, ok := ids[item.ID]; ok {
+			continue
+		}
+
+		ids[item.ID] = struct{}{}
+
 		for _, tag := range item.Tags {
 			if stat, ok := response.Stats[tag]; ok {
 				stat.Count++
