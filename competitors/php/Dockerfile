@@ -5,6 +5,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN install-php-extensions pcntl sockets openswoole
 COPY . /var/www
+COPY ./.docker/php.ini /usr/local/etc/php/conf.d/conf.ini
+
 WORKDIR /var/www
 RUN composer install --no-dev
 ENV APP_RUNTIME="Runtime\Swoole\Runtime"
